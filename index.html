@@ -65,6 +65,22 @@
         }
         </style>
         <title>Simulador de Riesgo Vial Escolar - Cartago</title>
+        <style>
+/* Ajuste compacto y título cambiado a Circuito escolar */
+.info.legend {
+    max-width: 240px !important;
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    border-radius: 8px !important;
+}
+.info.legend input[type="range"] {
+    width: 100% !important;
+    margin: 4px 0 !important;
+}
+</style>
     </head>
     <body>
         <div id="map"></div>
@@ -254,7 +270,7 @@
             div.innerHTML = '<div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #eee; padding-bottom:6px; margin-bottom:8px;">' +
                             '<div style="display:flex; align-items:center; gap:6px;">' +
                             '<img src="images/logogabo.jpg" style="width:28px; height:28px; object-fit:contain; border-radius:3px;" alt="Logo" onerror="this.style.display=\'none\'">' +
-                            '<h4 style="margin:0; font-size:12px; color:#2c3e50;">Movilidad GABO & Academico</h4>' +
+                            '<h4 style="margin:0; font-size:12px; color:#2c3e50;">Circuito Escolar</h4>' +
                             '</div>' +
                             '<button id="btnInfo" style="background:#eee; border:none; border-radius:50%; width:20px; height:20px; font-weight:bold; cursor:pointer; font-size:11px;" title="Ver Metodologia">?</button>' +
                             '</div>' +
