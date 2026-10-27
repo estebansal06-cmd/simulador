@@ -63,25 +63,74 @@
             background: #f0f0f0;
             border-color: #999;
         }
-    <style>
-  /* Estilo compacto y profesional para la leyenda */
-  .info.legend {
-      max-width: 220px !important;
-      padding: 6px 8px !important;
-      font-size: 10px !important;
-      background: rgba(255, 255, 255, 0.95) !important;
-      backdrop-filter: blur(4px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
-      border-radius: 8px !important;
-  }
-  .info.legend input[type="range"] {
-      width: 100% !important;
-      margin: 3px 0 !important;
-  }
-  .info.legend h4 {
-      font-size: 11px !important;
-      margin: 0 0 4px 0 !important;
-  }
+            /* ===== Panel principal (escritorio) ===== */
+.leaflet-right .info-slider {
+    background: #fff;
+    padding: 10px 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    font-family: sans-serif;
+    width: 220px;
+    margin-top: 60px !important;
+    box-sizing: border-box;
+}
+.info-slider .is-head {
+    display: flex; align-items: center; gap: 6px;
+    border-bottom: 1px solid #eee; padding-bottom: 6px; margin-bottom: 8px;
+}
+.info-slider .is-logo { width: 28px; height: 28px; object-fit: contain; border-radius: 3px; }
+.info-slider .is-title { margin: 0; font-size: 12px; color: #2c3e50; flex: 1; line-height: 1.2; }
+.info-slider .is-info {
+    background: #eee; border: none; border-radius: 50%;
+    width: 20px; height: 20px; font-weight: bold; cursor: pointer; font-size: 11px; flex-shrink: 0;
+}
+.info-slider .is-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.info-slider .is-play {
+    background: #d62728; color: #fff; border: none; border-radius: 4px;
+    padding: 3px 8px; font-size: 12px; cursor: pointer;
+}
+.info-slider #hora-label { font-weight: bold; color: #d62728; }
+.info-slider #slider-hora { width: 100%; margin: 6px 0 0 0; }
+.info-slider #badge-estado {
+    font-size: 10px; font-weight: bold; text-align: center; color: #fff;
+    padding: 3px; border-radius: 4px; margin-top: 6px;
+}
+
+/* Boton colapsar/expandir leyenda */
+.info-slider .is-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; margin-top: 8px; padding: 5px 6px;
+    border: 0; border-top: 1px solid #eee; background: transparent;
+    font: inherit; font-size: 11px; font-weight: bold; color: #2c3e50; cursor: pointer;
+}
+.info-slider .is-arrow { transition: transform 0.2s; }
+.info-slider.is-collapsed .is-arrow { transform: rotate(-90deg); }
+.info-slider.is-collapsed .is-extra { display: none; }
+
+.info-slider .is-extra { font-size: 10.5px; line-height: 1.4; color: #555; }
+.info-slider .is-extra .is-hor { font-size: 9.5px; padding-bottom: 4px; margin-bottom: 4px; border-bottom: 1px solid #eee; }
+.info-slider .sw { width: 10px; height: 10px; display: inline-block; margin-right: 4px; }
+
+/* Botones de navegacion */
+.nav-buttons { display: flex; flex-wrap: wrap; gap: 4px; }
+.nav-buttons .btn-nav { margin-right: 0; }
+
+/* ===== Movil / iframe angosto ===== */
+@media (max-width: 600px) {
+    .leaflet-right .info-slider {
+        width: 165px;
+        padding: 6px 8px;
+        margin-top: 52px !important;
+    }
+    .info-slider .is-head { padding-bottom: 4px; margin-bottom: 5px; }
+    .info-slider .is-logo { width: 20px; height: 20px; }
+    .info-slider .is-title { font-size: 10px; }
+    .info-slider .is-row { font-size: 11px; }
+    .info-slider #badge-estado { font-size: 9px; }
+    .info-slider .is-extra { font-size: 9.5px; }
+    .nav-buttons { max-width: 62vw; }
+    .nav-buttons .btn-nav { padding: 4px 6px; font-size: 10px; }
+}
 </style>
 
 <script>
