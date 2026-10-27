@@ -18,6 +18,7 @@
             padding: 0;
             margin: 0;
         }
+            #map { background: #dfe3e6; }
         .modal-bg {
             display: none;
             position: fixed;
@@ -498,7 +499,22 @@ function actualizarEtiquetas() {
 }
 map.on('zoomend', actualizarEtiquetas);
 actualizarEtiquetas();
-            
+
+            // Vista inicial: en celular vertical, mas cerca; y recalcular tamano en iframe
+function vistaInicial() {
+    map.invalidateSize();
+    if (window.innerWidth <= 600) {
+        map.setView([4.74431, -75.91878], 16);
+    } else {
+        map.fitBounds([[4.742162451695431,-75.92220214147757],[4.746455875788784,-75.91535100146277]]);
+    }
+}
+window.addEventListener('load', function () {
+    setTimeout(vistaInicial, 300);
+});
+window.addEventListener('resize', function () {
+    map.invalidateSize();
+});
         actualizarSimulacion(6);
         </script>
     </body>
