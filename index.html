@@ -105,7 +105,7 @@
 }
 .info-slider .is-arrow { transition: transform 0.2s; }
 .info-slider.is-collapsed .is-arrow { transform: rotate(-90deg); }
-.info-slider.is-collapsed .is-extra { display: none; }
+.info-slider.is-collapsed .is-extra { display: none !important; }
 
 .info-slider .is-extra { font-size: 10.5px; line-height: 1.4; color: #555; }
 .info-slider .is-extra .is-hor { font-size: 9.5px; padding-bottom: 4px; margin-bottom: 4px; border-bottom: 1px solid #eee; }
@@ -349,25 +349,20 @@ timeControl.onAdd = function (map) {
             '<span class="sw" style="background:rgb(44,160,44);"></span> Nivel Bajo (Valle)<br>' +
             '<span class="sw" style="background:rgb(31,119,180);"></span> Flujo Minimo' +
         '</div>';
+  var btnLey = div.querySelector('#btnLeyenda');
+    btnLey.addEventListener('click', function () {
+        var c = div.classList.toggle('is-collapsed');
+        btnLey.setAttribute('aria-expanded', String(!c));
+    });
+    if (window.matchMedia('(max-width: 600px)').matches) {
+        div.classList.add('is-collapsed');
+    }
+         
     L.DomEvent.disableClickPropagation(div);
     return div;
 };
 timeControl.addTo(map);
-
-// Colapsar/expandir leyenda (colapsada por defecto en movil)
-(function () {
-    var panel = document.querySelector('.info-slider');
-    var btn = document.getElementById('btnLeyenda');
-    function setCollapsed(c) {
-        panel.classList.toggle('is-collapsed', c);
-        btn.setAttribute('aria-expanded', String(!c));
-    }
-    btn.addEventListener('click', function () {
-        setCollapsed(!panel.classList.contains('is-collapsed'));
-    });
-    setCollapsed(window.matchMedia('(max-width: 600px)').matches);
-})();
-
+   
         // BOTONES DE NAVEGACION RAPIDA (ABAJO IZQUIERDA)
         var navControl = L.control({position: 'bottomleft'});
         navControl.onAdd = function (map) {
