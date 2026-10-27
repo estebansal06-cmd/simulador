@@ -136,6 +136,17 @@
     .nav-buttons { max-width: 62vw; }
     .nav-buttons .btn-nav { padding: 4px 6px; font-size: 10px; }
 }
+            /* ===== Etiquetas por nivel de zoom ===== */
+.zoom-bajo .css_aristas_sistema_vial_1,
+.zoom-bajo .css_nodos_colegio_2,
+.zoom-medio .css_nodos_colegio_2 {
+    display: none !important;
+}
+
+@media (max-width: 600px) {
+    .css_aristas_sistema_vial_1 div { font-size: 9px !important; }
+    .css_nodos_colegio_2 div { font-size: 8px !important; padding: 1px !important; }
+}
 </style>
 
 <script>
@@ -478,7 +489,16 @@ timeControl.addTo(map);
                 modal.style.display = 'none';
             }
         });
-
+// Etiquetas segun zoom: <17 ninguna, 17 solo vias, 18+ vias y nodos
+function actualizarEtiquetas() {
+    var z = map.getZoom();
+    var c = map.getContainer();
+    c.classList.toggle('zoom-bajo', z < 17);
+    c.classList.toggle('zoom-medio', z >= 17 && z < 18);
+}
+map.on('zoomend', actualizarEtiquetas);
+actualizarEtiquetas();
+            
         actualizarSimulacion(6);
         </script>
     </body>
