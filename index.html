@@ -63,33 +63,39 @@
             background: #f0f0f0;
             border-color: #999;
         }
-     <style>
-/* Forzar reubicación absoluta a la esquina superior derecha pero compacta */
-div.info.legend.leaflet-control {
-    position: absolute !important;
-    top: 10px !important;
-    right: 10px !important;
-    left: auto !important;
-    max-width: 220px !important;
-    padding: 6px 8px !important;
-    font-size: 10px !important;
-    background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
-    border-radius: 8px !important;
-    z-index: 999999 !important;
-}
-
-div.info.legend.leaflet-control input[type="range"] {
-    width: 100% !important;
-    margin: 3px 0 !important;
-}
-
-div.info.legend.leaflet-control h4 {
-    font-size: 11px !important;
-    margin: 0 0 4px 0 !important;
-}
+    <style>
+  /* Estilo compacto y profesional para la leyenda */
+  .info.legend {
+      max-width: 220px !important;
+      padding: 6px 8px !important;
+      font-size: 10px !important;
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+      border-radius: 8px !important;
+  }
+  .info.legend input[type="range"] {
+      width: 100% !important;
+      margin: 3px 0 !important;
+  }
+  .info.legend h4 {
+      font-size: 11px !important;
+      margin: 0 0 4px 0 !important;
+  }
 </style>
+
+<script>
+  // Script para asegurar que la leyenda mantenga el tamaño compacto tras cargar
+  window.addEventListener('DOMContentLoaded', (event) => {
+      setTimeout(() => {
+          const legend = document.querySelector('.info.legend');
+          if (legend) {
+              legend.style.maxWidth = '220px';
+              legend.style.padding = '6px 8px';
+          }
+      }, 1000);
+  });
+</script>
     </head>
     <body>
         <div id="map"></div>
