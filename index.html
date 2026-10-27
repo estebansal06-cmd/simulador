@@ -320,45 +320,53 @@
         });
 
         // PANEL PRINCIPAL (CON LOGO GABO Y SIMULADOR)
-        var timeControl = L.control({position: 'topright'});
-        timeControl.onAdd = function (map) {
-            var div = L.DomUtil.create('div', 'info-slider');
-            div.style.background = 'white';
-            div.style.padding = '12px 14px';
-            div.style.borderRadius = '8px';
-            div.style.boxShadow = '0 2px 10px rgba(0,0,0,0.25)';
-            div.style.fontFamily = 'sans-serif';
-            div.style.maxWidth = '250px';
-            div.style.marginTop = '60px';
+var timeControl = L.control({position: 'topright'});
+timeControl.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info-slider');
+    div.innerHTML =
+        '<div class="is-head">' +
+            '<img class="is-logo" src="images/logogabo.jpg" alt="Logo" onerror="this.style.display=\'none\'">' +
+            '<h4 class="is-title">Movilidad GABO &amp; Academico</h4>' +
+            '<button id="btnInfo" class="is-info" title="Ver Metodologia">?</button>' +
+        '</div>' +
+        '<div class="is-row">' +
+            '<button id="btnPlay" class="is-play">&#9654;</button>' +
+            '<label>Hora: <span id="hora-label">06:00</span> hrs</label>' +
+        '</div>' +
+        '<input type="range" id="slider-hora" min="6" max="18" step="1" value="6">' +
+        '<div id="badge-estado">ENTRADA MANANA (ALTO FLUJO)</div>' +
+        '<button id="btnLeyenda" class="is-toggle" type="button" aria-expanded="true">' +
+            '<span>Circuito escolar</span><span class="is-arrow">&#9662;</span>' +
+        '</button>' +
+        '<div class="is-extra">' +
+            '<div class="is-hor">' +
+                '<b>GABO:</b> Ent 6:20/12:40 | Sal 12:20/18:00<br>' +
+                '<b>Academico:</b> Ent 7:00/13:20 | Sal 13:00/18:20' +
+            '</div>' +
+            '<b>Convenciones de Riesgo:</b><br>' +
+            '<span class="sw" style="background:rgb(139,0,0);"></span> Alto Riesgo (Critico)<br>' +
+            '<span class="sw" style="background:rgb(255,140,0);"></span> Precaucion / Moderado<br>' +
+            '<span class="sw" style="background:rgb(44,160,44);"></span> Nivel Bajo (Valle)<br>' +
+            '<span class="sw" style="background:rgb(31,119,180);"></span> Flujo Minimo' +
+        '</div>';
+    L.DomEvent.disableClickPropagation(div);
+    return div;
+};
+timeControl.addTo(map);
 
-            div.innerHTML = '<div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #eee; padding-bottom:6px; margin-bottom:8px;">' +
-                            '<div style="display:flex; align-items:center; gap:6px;">' +
-                            '<img src="images/logogabo.jpg" style="width:28px; height:28px; object-fit:contain; border-radius:3px;" alt="Logo" onerror="this.style.display=\'none\'">' +
-                            '<h4 style="margin:0; font-size:12px; color:#2c3e50;">Circuito Escolar</h4>' +
-                            '</div>' +
-                            '<button id="btnInfo" style="background:#eee; border:none; border-radius:50%; width:20px; height:20px; font-weight:bold; cursor:pointer; font-size:11px;" title="Ver Metodologia">?</button>' +
-                            '</div>' +
-                            '<div style="display:flex; align-items:center; gap:8px;">' +
-                            '<button id="btnPlay" style="background:#d62728; color:white; border:none; border-radius:4px; padding:3px 8px; font-size:12px; cursor:pointer;">&#9654;</button>' +
-                            '<label style="font-size:12px;">Hora: <span id="hora-label" style="font-weight:bold; color:#d62728;">06:00</span> hrs</label>' +
-                            '</div>' +
-                            '<input type="range" id="slider-hora" min="6" max="18" step="1" value="6" style="width: 100%; margin-top:6px;">' +
-                            '<div id="badge-estado" style="font-size:10px; font-weight:bold; text-align:center; background:#ff4d4d; color:white; padding:3px; border-radius:4px; margin-top:6px;">ENTRADA MANANA (ALTO FLUJO)</div>' +
-                            '<div style="font-size:9.5px; color:#555; margin-top:6px; border-top:1px solid #eee; padding-top:4px; line-height: 1.3;">' +
-                            '<b>GABO:</b> Ent 6:20/12:40 | Sal 12:20/18:00<br>' +
-                            '<b>Academico:</b> Ent 7:00/13:20 | Sal 13:00/18:20' +
-                            '</div>' +
-                            '<div style="font-size:10.5px; margin-top:6px; border-top:1px solid #eee; padding-top:5px; line-height: 1.4;">' +
-                            '<b>Convenciones de Riesgo:</b><br>' +
-                            '<span style="background:rgb(139,0,0); width:10px; height:10px; display:inline-block; margin-right:4px;"></span> Alto Riesgo (Critico)<br>' +
-                            '<span style="background:rgb(255,140,0); width:10px; height:10px; display:inline-block; margin-right:4px;"></span> Precaucion / Moderado<br>' +
-                            '<span style="background:rgb(44,160,44); width:10px; height:10px; display:inline-block; margin-right:4px;"></span> Nivel Bajo (Valle)<br>' +
-                            '<span style="background:rgb(31,119,180); width:10px; height:10px; display:inline-block; margin-right:4px;"></span> Flujo Minimo' +
-                            '</div>';
-            L.DomEvent.disableClickPropagation(div);
-            return div;
-        };
-        timeControl.addTo(map);
+// Colapsar/expandir leyenda (colapsada por defecto en movil)
+(function () {
+    var panel = document.querySelector('.info-slider');
+    var btn = document.getElementById('btnLeyenda');
+    function setCollapsed(c) {
+        panel.classList.toggle('is-collapsed', c);
+        btn.setAttribute('aria-expanded', String(!c));
+    }
+    btn.addEventListener('click', function () {
+        setCollapsed(!panel.classList.contains('is-collapsed'));
+    });
+    setCollapsed(window.matchMedia('(max-width: 600px)').matches);
+})();
 
         // BOTONES DE NAVEGACION RAPIDA (ABAJO IZQUIERDA)
         var navControl = L.control({position: 'bottomleft'});
